@@ -5,7 +5,7 @@ namespace SCCSFirstLaba.Interfaces
 {
     public interface IFileHelper
     {
-        void Create(IEnumerable<DataToWrite> item, double average, string path);
+        void CreateReport(IEnumerable<DataToWrite> item, double average, string path);
 
         IEnumerable<Student> GetAll(string path);
     }

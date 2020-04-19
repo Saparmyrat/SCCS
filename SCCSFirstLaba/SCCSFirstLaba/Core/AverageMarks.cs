@@ -6,9 +6,9 @@ namespace SCCSFirstLaba.Core
 {
     public static class AverageMarks
     {
-        public static double AverageMarksStudent(this Student student) => student.Marks.Average();
+        public static double GetAverageStudentMark(this Student student) => student.Marks.Average();
 
-        public static double AverageForGroup(this IEnumerable<Student> students)
-            => students.Select(s => s.AverageMarksStudent()).Average();
+        public static double GetAverageStudentsMark(this IEnumerable<Student> students)
+            => students.Select(s => s.GetAverageStudentMark()).Average();
     }
 }

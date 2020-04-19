@@ -46,7 +46,7 @@ namespace SCCSFirstLaba
         private static IEnumerable<Student> GetData(string path)
         {
             var excelService = new ExcelService();
-            var students = excelService.GetAll(path);
+            var students = excelService.ReadCsvFile(path);
 
             return students;
         }

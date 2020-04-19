@@ -27,13 +27,13 @@ namespace SCCSFirstLaba.Services
                     FirstName = student.FirstName,
                     Surname = student.Surname,
                     Patronymic = student.Patronymic,
-                    AverageMarks = AverageMarks.AverageMarksStudent(student),
+                    AverageMarks = AverageMarks.GetAverageStudentMark(student),
                 };
                 dataToWrite.Add(studentToWrite);
             }
-            _fileHelper.Create(dataToWrite, AverageMarks.AverageForGroup(item.ToList()), path);
+            _fileHelper.CreateReport(dataToWrite, AverageMarks.GetAverageStudentsMark(item.ToList()), path);
         }
         
-        public IEnumerable<Student> GetAll(string path) => _fileHelper.GetAll(path);
+        public IEnumerable<Student> ReadCsvFile(string path) => _fileHelper.GetAll(path);
     }
 }

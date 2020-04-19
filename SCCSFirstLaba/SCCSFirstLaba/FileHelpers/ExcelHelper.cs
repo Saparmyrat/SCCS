@@ -11,7 +11,7 @@ namespace SCCSFirstLaba.FileHelpers
 {
     public class ExcelHelper : IFileHelper
     {
-        public void Create(IEnumerable<DataToWrite> item, double averageGroup, string path)
+        public void CreateReport(IEnumerable<DataToWrite> item, double averageGroup, string path)
         {
             const string worksheetName = "Students";
             const string averageGroupName = "Average group:";

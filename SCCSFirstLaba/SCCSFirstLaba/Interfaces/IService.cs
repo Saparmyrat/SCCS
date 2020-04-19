@@ -7,6 +7,6 @@ namespace SCCSFirstLaba.Interfaces
     {
         void Create(IEnumerable<Student> item, string path);
 
-        IEnumerable<Student> GetAll(string path);
+        IEnumerable<Student> ReadCsvFile(string path);
     }
 }

@@ -9,7 +9,7 @@ namespace SCCSFirstLaba.FileHelpers
 {
     public class JsonHelper : IFileHelper
     {
-        public void Create(IEnumerable<DataToWrite> item, double averageGroup, string path)
+        public void CreateReport(IEnumerable<DataToWrite> item, double averageGroup, string path)
         {
             using var writer = new StreamWriter(path, false, Encoding.UTF8);
             writer.Write(JsonConvert.SerializeObject(item));
