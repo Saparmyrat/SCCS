@@ -5,7 +5,7 @@ namespace SCCSFirstLaba.Interfaces
 {
     public interface IService
     {
-        void Create(IEnumerable<Student> item, string path);
+        void CreateReport(IEnumerable<Student> item, string path);
 
         IEnumerable<Student> ReadCsvFile(string path);
     }

@@ -1,7 +1,8 @@
 ﻿using CommandLine;
 using SCCSFirstLaba.CommandLineOptions;
+using SCCSFirstLaba.Core;
+using SCCSFirstLaba.FileHelpers;
 using SCCSFirstLaba.Models;
-using SCCSFirstLaba.Services;
 using System.Collections.Generic;
 
 namespace SCCSFirstLaba
@@ -33,20 +34,20 @@ namespace SCCSFirstLaba
         
         private static void SaveExcel(IEnumerable<Student> students, string path)
         {
-            var excelService = new ExcelService();
-            excelService.Create(students, path);
+            var excelHelper = new FileHelper(new ExcelHelper());
+            excelHelper.CreateReport(students, path);
         }
         
         private static void SaveJson(IEnumerable<Student> students, string path)
         {
-            var jsonService = new JsonService();
-            jsonService.Create(students, path);
+            var jsonHelper = new FileHelper(new JsonHelper());
+            jsonHelper.CreateReport(students, path);
         }
         
         private static IEnumerable<Student> GetData(string path)
         {
-            var excelService = new ExcelService();
-            var students = excelService.ReadCsvFile(path);
+            var excelHelper = new FileHelper(new ExcelHelper());
+            var students = excelHelper.ReadCsvFile(path);
 
             return students;
         }
