@@ -22,7 +22,7 @@ namespace BusinessLayer.Services
             _mapper = mapper;
         }
 
-        public Task<int> CreateAsync(Record item)
+        public Task<Record> CreateAsync(Record item)
         {
             if (item == null)
             {
@@ -30,21 +30,6 @@ namespace BusinessLayer.Services
             }
 
             return CreateInternalAsync(item);
-        }
-
-        private async Task<int> CreateInternalAsync(Record item)
-        {
-            if (item.DateOfDisease < DateTimeOffset.Now)
-            {
-                throw new DateException("Date of disease cannot be in the past", nameof(item));
-            }
-
-            await _recordRepository.CreateAsync(_mapper.Map<RecordDto>(item));
-
-            var allRecords = await _recordRepository.GetAllAsync();
-            var record = allRecords.Last();
-
-            return record.Id;
         }
 
         public Task DeleteAsync(Record item)
@@ -96,6 +81,21 @@ namespace BusinessLayer.Services
             }
 
             await _recordRepository.UpdateAsync(_mapper.Map<RecordDto>(item));
+        }
+
+        private async Task<Record> CreateInternalAsync(Record item)
+        {
+            if (item.DateOfDisease < DateTimeOffset.Now)
+            {
+                throw new DateException("Date of disease cannot be in the past", nameof(item));
+            }
+
+            await _recordRepository.CreateAsync(_mapper.Map<RecordDto>(item));
+
+            var allRecords = await _recordRepository.GetAllAsync();
+            var record = _mapper.Map<Record>(allRecords.Last());
+
+            return record;
         }
     }
 }

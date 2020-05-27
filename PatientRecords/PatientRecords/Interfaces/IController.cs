@@ -1,17 +1,19 @@
-﻿namespace PatientRecords.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace PatientRecords.Interfaces
 {
     public interface IController
     {
         void Start();
 
-        void DisplayAll();
+        Task DisplayAll();
 
-        void DisplayById();
+        Task DisplayById();
 
-        void Create();
+        Task Create();
 
-        void Update();
+        Task Update();
 
-        void Delete();
+        Task Delete();
     }
 }

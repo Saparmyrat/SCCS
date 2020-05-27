@@ -8,7 +8,7 @@ namespace DataAccessLayer.Configuration
 {
     public static class DalCollectionExtensions
     {
-        public static void RegisterDependencies(IConfiguration configuration, IServiceCollection services, string connectionName)
+        public static void RegisterDependenciesDal(this IServiceCollection services, IConfiguration configuration, string connectionName)
         {
             string connection = configuration.GetConnectionString(connectionName);
             services.AddDbContext<PatientRecordsContext>(options => options.UseSqlServer(connection));

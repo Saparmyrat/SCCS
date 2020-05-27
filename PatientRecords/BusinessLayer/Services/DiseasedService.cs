@@ -23,7 +23,7 @@ namespace BusinessLayer.Services
             _mapper = mapper;
         }
 
-        public Task<int> CreateAsync(Diseased item)
+        public Task<Diseased> CreateAsync(Diseased item)
         {
             if (item == null)
             {
@@ -31,21 +31,6 @@ namespace BusinessLayer.Services
             }
 
             return CreateInternalAsync(item);
-        }
-
-        private async Task<int> CreateInternalAsync(Diseased item)
-        {
-            if (item.DateOfIllnes >= DateTimeOffset.Now)
-            {
-                throw new DateException("Date of illnes cannot be in the present or future tense", nameof(item));
-            }
-
-            await _diseasedRepository.CreateAsync(_mapper.Map<DiseasedDto>(item));
-
-            var allDiseaseds = await _diseasedRepository.GetAllAsync();
-            var driver = allDiseaseds.Last();
-
-            return driver.Id;
         }
 
         public Task DeleteAsync(Diseased item)
@@ -92,6 +77,21 @@ namespace BusinessLayer.Services
         private async Task UpdateInternalAsync(Diseased item)
         {
             await _diseasedRepository.UpdateAsync(_mapper.Map<DiseasedDto>(item));
+        }
+
+        private async Task<Diseased> CreateInternalAsync(Diseased item)
+        {
+            if (item.DateOfIllnes >= DateTimeOffset.Now)
+            {
+                throw new DateException("Date of illnes cannot be in the present or future tense", nameof(item));
+            }
+
+            await _diseasedRepository.CreateAsync(_mapper.Map<DiseasedDto>(item));
+
+            var allDiseaseds = await _diseasedRepository.GetAllAsync();
+            var diseased = _mapper.Map<Diseased>(allDiseaseds.Last());
+
+            return diseased;
         }
     }
 }

@@ -6,6 +6,8 @@ namespace BusinessLayer.Exceptions
     [Serializable]
     public class DateException : Exception
     {
+        public string ParamName { get; set; }
+
         public DateException()
         {
         }
@@ -35,7 +37,5 @@ namespace BusinessLayer.Exceptions
             : base(serializationInfo, streamingContext)
         {
         }
-
-        public string ParamName { get; set; }
     }
 }

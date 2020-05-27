@@ -5,6 +5,7 @@ using EasyConsole;
 using PatientRecords.Interfaces;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PatientRecords.Controllers
 {
@@ -22,18 +23,18 @@ namespace PatientRecords.Controllers
             Console.WriteLine("Record");
 
             var menu = new Menu()
-              .Add("Display all records", () => DisplayAll())
-              .Add("Display record by id", () => DisplayById())
-              .Add("Create record", () => Create())
-              .Add("Update record", () => Update())
-              .Add("Delete record", () => Delete());
+              .Add("Display all records", () => DisplayAll().GetAwaiter().GetResult())
+              .Add("Display record by id", () => DisplayById().GetAwaiter().GetResult())
+              .Add("Create record", () => Create().GetAwaiter().GetResult())
+              .Add("Update record", () => Update().GetAwaiter().GetResult())
+              .Add("Delete record", () => Delete().GetAwaiter().GetResult());
 
             menu.Display();
         }
 
-        public void DisplayAll()
+        public async Task DisplayAll()
         {
-            var allRecords = _recordService.GetAllAsync().GetAwaiter().GetResult();
+            var allRecords = await _recordService.GetAllAsync();
 
             Console.WriteLine("All records");
             foreach (var record in allRecords)
@@ -47,14 +48,14 @@ namespace PatientRecords.Controllers
             }
         }
 
-        public void DisplayById()
+        public async Task DisplayById()
         {
             Console.WriteLine("Record by id");
             try
             {
                 Console.Write("Indicate id: ");
                 var id = int.Parse(Console.ReadLine());
-                var record = _recordService.GetByIdAsync(id).GetAwaiter().GetResult();
+                var record = await _recordService.GetByIdAsync(id);
 
                 Console.Write("Disease: ");
                 Output.WriteLine(ConsoleColor.Green, record.Disease);
@@ -69,7 +70,7 @@ namespace PatientRecords.Controllers
             }
         }
 
-        public void Create()
+        public async Task Create()
         {
             var record = new Record();
 
@@ -83,7 +84,7 @@ namespace PatientRecords.Controllers
                 Console.WriteLine("Patronic: ");
                 record.DateOfDisease = DateTimeOffset.Parse(Console.ReadLine());
 
-                _recordService.CreateAsync(record).GetAwaiter().GetResult();
+                await _recordService.CreateAsync(record);
                 Console.WriteLine("Record created succesfully");
             }
             catch (FormatException ex)
@@ -96,7 +97,7 @@ namespace PatientRecords.Controllers
             }
         }
 
-        public void Update()
+        public async Task Update()
         {
             var record = new Record();
 
@@ -110,7 +111,7 @@ namespace PatientRecords.Controllers
                 Console.WriteLine("Patronic: ");
                 record.DateOfDisease = DateTimeOffset.Parse(Console.ReadLine());
 
-                _recordService.UpdateAsync(record).GetAwaiter().GetResult();
+                await _recordService.UpdateAsync(record);
                 Console.WriteLine("Record updates succesfuly");
             }
             catch (FormatException ex)
@@ -123,7 +124,7 @@ namespace PatientRecords.Controllers
             }
         }
 
-        public void Delete()
+        public async Task Delete()
         {
             Console.WriteLine("Delete record");
             try
@@ -131,10 +132,10 @@ namespace PatientRecords.Controllers
                 Console.WriteLine("Indicate id: ");
                 int id = int.Parse(Console.ReadLine());
 
-                var allRecords = _recordService.GetAllAsync().GetAwaiter().GetResult();
+                var allRecords = await _recordService.GetAllAsync();
                 var record = allRecords.Where(val => val.Id == id).FirstOrDefault();
 
-                _recordService.DeleteAsync(record).GetAwaiter().GetResult();
+                await _recordService.DeleteAsync(record);
                 Console.WriteLine("Record deleted succesfully");
             }
             catch (FormatException ex)

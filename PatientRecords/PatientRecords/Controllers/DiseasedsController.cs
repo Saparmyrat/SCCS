@@ -5,6 +5,7 @@ using EasyConsole;
 using PatientRecords.Interfaces;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PatientRecords.Controllers
 {
@@ -22,18 +23,18 @@ namespace PatientRecords.Controllers
             Console.WriteLine("Diseased");
 
             var menu = new Menu()
-              .Add("Display all diseaseds", () => DisplayAll())
-              .Add("Display diseased by id", () => DisplayById())
-              .Add("Create diseased", () => Create())
-              .Add("Update diseased", () => Update())
-              .Add("Delete diseased", () => Delete());
+              .Add("Display all diseaseds", () => DisplayAll().GetAwaiter().GetResult())
+              .Add("Display diseased by id", () => DisplayById().GetAwaiter().GetResult())
+              .Add("Create diseased", () => Create().GetAwaiter().GetResult())
+              .Add("Update diseased", () => Update().GetAwaiter().GetResult())
+              .Add("Delete diseased", () => Delete().GetAwaiter().GetResult());
 
             menu.Display();
         }
 
-        public void DisplayAll()
+        public async Task DisplayAll()
         {
-            var allDiseaseds = _diseasedService.GetAllAsync().GetAwaiter().GetResult();
+            var allDiseaseds = await _diseasedService.GetAllAsync();
 
             Console.WriteLine("All diseaseds");
             foreach (var diseased in allDiseaseds)
@@ -47,14 +48,14 @@ namespace PatientRecords.Controllers
             }
         }
 
-        public void DisplayById()
+        public async Task DisplayById()
         {
             Console.WriteLine("Diseased by id");
             try
             {
                 Console.Write("Indicate id: ");
                 var id = int.Parse(Console.ReadLine());
-                var diseased = _diseasedService.GetByIdAsync(id).GetAwaiter().GetResult();
+                var diseased = await _diseasedService.GetByIdAsync(id);
 
                 Console.Write("Disease: ");
                 Output.WriteLine(ConsoleColor.Green, diseased.Disease);
@@ -67,7 +68,7 @@ namespace PatientRecords.Controllers
             }
         }
 
-        public void Create()
+        public async Task Create()
         {
             var diseased = new Diseased();
 
@@ -81,7 +82,7 @@ namespace PatientRecords.Controllers
                 Console.WriteLine("Date of illnes (yy-mm-dd):");
                 diseased.DateOfIllnes = DateTimeOffset.Parse(Console.ReadLine());
 
-                _diseasedService.CreateAsync(diseased).GetAwaiter().GetResult();
+                await _diseasedService.CreateAsync(diseased);
                 Console.WriteLine("Diseased created succesfully");
             }
             catch (FormatException ex)
@@ -94,7 +95,7 @@ namespace PatientRecords.Controllers
             }
         }
 
-        public void Update()
+        public async Task Update()
         {
             var diseased = new Diseased();
 
@@ -110,7 +111,7 @@ namespace PatientRecords.Controllers
                 Console.WriteLine("Date of illnes (yy-mm-dd):");
                 diseased.DateOfIllnes = DateTimeOffset.Parse(Console.ReadLine());
 
-                _diseasedService.UpdateAsync(diseased).GetAwaiter().GetResult();
+                await _diseasedService.UpdateAsync(diseased);
                 Console.WriteLine("Diseased updates succesfuly");
             }
             catch (FormatException ex)
@@ -123,7 +124,7 @@ namespace PatientRecords.Controllers
             }
         }
 
-        public void Delete()
+        public async Task Delete()
         {
             Console.WriteLine("Delete diseased");
             try
@@ -131,10 +132,10 @@ namespace PatientRecords.Controllers
                 Console.WriteLine("Indicate id: ");
                 int id = int.Parse(Console.ReadLine());
 
-                var allDiseased = _diseasedService.GetAllAsync().GetAwaiter().GetResult();
+                var allDiseased = await _diseasedService.GetAllAsync();
                 var diseased = allDiseased.Where(val => val.Id == id).FirstOrDefault();
 
-                _diseasedService.DeleteAsync(diseased).GetAwaiter().GetResult();
+                await _diseasedService.DeleteAsync(diseased);
                 Console.WriteLine("Diseased deleted succesfully");
             }
             catch (FormatException ex)

@@ -4,6 +4,7 @@ using EasyConsole;
 using PatientRecords.Interfaces;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PatientRecords.Controllers
 {
@@ -21,18 +22,18 @@ namespace PatientRecords.Controllers
             Console.WriteLine("Patient");
 
             var menu = new Menu()
-              .Add("Display all patients", () => DisplayAll())
-              .Add("Display patient by id", () => DisplayById())
-              .Add("Create patient", () => Create())
-              .Add("Update patient", () => Update())
-              .Add("Delete patient", () => Delete());
+              .Add("Display all patients", () => DisplayAll().GetAwaiter().GetResult())
+              .Add("Display patient by id", () => DisplayById().GetAwaiter().GetResult())
+              .Add("Create patient", () => Create().GetAwaiter().GetResult())
+              .Add("Update patient", () => Update().GetAwaiter().GetResult())
+              .Add("Delete patient", () => Delete().GetAwaiter().GetResult());
 
             menu.Display();
         }
 
-        public void DisplayAll()
+        public async Task DisplayAll()
         {
-            var allPatients = _patientService.GetAllAsync().GetAwaiter().GetResult();
+            var allPatients = await _patientService.GetAllAsync();
 
             Console.WriteLine("All patients");
             foreach (var patient in allPatients)
@@ -48,14 +49,14 @@ namespace PatientRecords.Controllers
             }
         }
 
-        public void DisplayById()
+        public async Task DisplayById()
         {
             Console.WriteLine("Patient by id");
             try
             {
                 Console.Write("Indicate id: ");
                 var id = int.Parse(Console.ReadLine());
-                var patient = _patientService.GetByIdAsync(id).GetAwaiter().GetResult();
+                var patient = await _patientService.GetByIdAsync(id);
 
                 Console.Write("First name: ");
                 Output.WriteLine(ConsoleColor.Green, patient.FirstName);
@@ -72,7 +73,7 @@ namespace PatientRecords.Controllers
             }
         }
 
-        public void Create()
+        public async Task Create()
         {
             var patient = new Patient();
 
@@ -88,7 +89,7 @@ namespace PatientRecords.Controllers
                 Console.WriteLine("Address: ");
                 patient.Address = Console.ReadLine();
 
-                _patientService.CreateAsync(patient).GetAwaiter().GetResult();
+                await _patientService.CreateAsync(patient);
                 Console.WriteLine("Patient created succesfully");
             }
             catch (FormatException ex)
@@ -97,7 +98,7 @@ namespace PatientRecords.Controllers
             }
         }
 
-        public void Update()
+        public async Task Update()
         {
             var patient = new Patient();
 
@@ -115,7 +116,7 @@ namespace PatientRecords.Controllers
                 Console.WriteLine("Address: ");
                 patient.Address = Console.ReadLine();
 
-                _patientService.UpdateAsync(patient).GetAwaiter().GetResult();
+                await _patientService.UpdateAsync(patient);
                 Console.WriteLine("Patient updates succesfuly");
             }
             catch (FormatException ex)
@@ -124,7 +125,7 @@ namespace PatientRecords.Controllers
             }
         }
 
-        public void Delete()
+        public async Task Delete()
         {
             Console.WriteLine("Delete patient");
             try
@@ -132,10 +133,10 @@ namespace PatientRecords.Controllers
                 Console.WriteLine("Indicate id: ");
                 int id = int.Parse(Console.ReadLine());
 
-                var allPatinets = _patientService.GetAllAsync().GetAwaiter().GetResult();
+                var allPatinets = await _patientService.GetAllAsync();
                 var patient = allPatinets.Where(val => val.Id == id).FirstOrDefault();
 
-                _patientService.DeleteAsync(patient).GetAwaiter().GetResult();
+                await _patientService.DeleteAsync(patient);
                 Console.WriteLine("Patient deleted succesfully");
             }
             catch (FormatException ex)

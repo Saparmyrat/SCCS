@@ -7,7 +7,7 @@ namespace BusinessLayer.Interfaces
         where TModel : class
         where T : struct
     {
-        Task<T> CreateAsync(TModel item);
+        Task<TModel> CreateAsync(TModel item);
 
         Task UpdateAsync(TModel item);
 

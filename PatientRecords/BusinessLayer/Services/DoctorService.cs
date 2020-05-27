@@ -22,7 +22,7 @@ namespace BusinessLayer.Services
             _mapper = mapper;
         }
 
-        public Task<int> CreateAsync(Doctor item)
+        public Task<Doctor> CreateAsync(Doctor item)
         {
             if (item == null)
             {
@@ -30,16 +30,6 @@ namespace BusinessLayer.Services
             }
 
             return CreateInternalAsync(item);
-        }
-
-        private async Task<int> CreateInternalAsync(Doctor item)
-        {
-            await _doctorRepository.CreateAsync(_mapper.Map<DoctorDto>(item));
-
-            var allDoctors = await _doctorRepository.GetAllAsync();
-            var driver = allDoctors.Last();
-
-            return driver.Id;
         }
 
         public Task DeleteAsync(Doctor item)
@@ -86,6 +76,16 @@ namespace BusinessLayer.Services
         private async Task UpdateInternalAsync(Doctor item)
         {
             await _doctorRepository.UpdateAsync(_mapper.Map<DoctorDto>(item));
+        }
+
+        private async Task<Doctor> CreateInternalAsync(Doctor item)
+        {
+            await _doctorRepository.CreateAsync(_mapper.Map<DoctorDto>(item));
+
+            var allDoctors = await _doctorRepository.GetAllAsync();
+            var doctor = _mapper.Map<Doctor>(allDoctors.Last());
+
+            return doctor;
         }
     }
 }
