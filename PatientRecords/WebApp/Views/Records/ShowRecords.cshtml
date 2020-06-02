@@ -1,0 +1,48 @@
+﻿@model List<RecordViewModel>
+
+@{
+    ViewData["Title"] = "Records";
+}
+
+<div>
+    <h2>Records</h2>
+    <form method="get" asp-action="CreateRecord" asp-controller="Records" asp-antiforgery="false">
+        <input type="submit" class="btn btn-success" value="Create" />
+    </form>
+</div>
+<ul>
+    @foreach (var item in Model)
+    {
+    <li class="show-content">
+        @await Component.InvokeAsync("GetPatient", new { id = @item.PatientId })
+        @await Component.InvokeAsync("GetDoctor", new { id = @item.DoctorId })
+        <div class="flex-row__space-between">
+            <div class="alert alert-success" role="alert">
+                Cabinet
+            </div>
+            <div class="alert alert-primary" role="alert">
+                @item.Cabinet
+            </div>
+        </div>
+        <div class="flex-row__space-between">
+            <div class="alert alert-success" role="alert">
+                Date
+            </div>
+            <div class="alert alert-primary" role="alert">
+                @item.Date
+            </div>
+        </div>
+        <div>
+            <form method="get" asp-action="UpdateRecord" asp-controller="Records" asp-antiforgery="false">
+                <input type="hidden" name="Id" value="@item.Id" />
+                <input type="submit" class="btn btn-success" value="Edit" />
+            </form>
+            <form method="get" asp-action="DeleteRecord" asp-controller="Records" asp-antiforgery="false">
+                <input type="hidden" name="Id" value="@item.Id" />
+                <input type="submit" class="btn btn-warning" value="Delete" />
+            </form>
+        </div>
+    </li>
+    }
+</ul>
+

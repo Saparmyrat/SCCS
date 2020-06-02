@@ -75,7 +75,7 @@ namespace BusinessLayer.Services
 
         private async Task UpdateInternalAsync(Record item)
         {
-            if (item.DateOfDisease < DateTimeOffset.Now)
+            if (item.Date < DateTimeOffset.Now)
             {
                 throw new DateException("Date of disease cannot be in the past", nameof(item));
             }
@@ -85,7 +85,7 @@ namespace BusinessLayer.Services
 
         private async Task<Record> CreateInternalAsync(Record item)
         {
-            if (item.DateOfDisease < DateTimeOffset.Now)
+            if (item.Date < DateTimeOffset.Now)
             {
                 throw new DateException("Date of disease cannot be in the past", nameof(item));
             }

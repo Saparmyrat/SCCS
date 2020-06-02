@@ -1,0 +1,46 @@
+﻿@model List<DiseasedViewModel>
+
+@{
+    ViewData["Title"] = "Diseaseds";
+}
+
+<div>
+    <h2>Diseaseds</h2>
+    <form method="get" asp-action="CreateDiseased" asp-controller="Diseaseds" asp-antiforgery="false">
+        <input type="submit" class="btn btn-success" value="Create" />
+    </form>
+</div>
+<ul>
+    @foreach (var item in Model)
+    {
+    <li class="show-content">
+        @await Component.InvokeAsync("GetPatient", new { id = @item.PatientId })
+        <div class="flex-row__space-between">
+            <div class="alert alert-success" role="alert">
+                Disease
+            </div>
+            <div class="alert alert-primary" role="alert">
+                @item.Disease
+            </div>
+        </div>
+        <div class="flex-row__space-between">
+            <div class="alert alert-success" role="alert">
+                DateOfIllnes
+            </div>
+            <div class="alert alert-primary" role="alert">
+                @item.DateOfIllnes.ToString("dd.MM.yyyy")
+            </div>
+        </div>
+        <div>
+            <form method="get" asp-action="UpdateDiseased" asp-controller="Diseaseds" asp-antiforgery="false">
+                <input type="hidden" name="Id" value="@item.Id" />
+                <input type="submit" class="btn btn-success" value="Edit" />
+            </form>
+            <form method="get" asp-action="DeleteDiseased" asp-controller="Diseaseds" asp-antiforgery="false">
+                <input type="hidden" name="Id" value="@item.Id" />
+                <input type="submit" class="btn btn-warning" value="Delete" />
+            </form>
+        </div>
+    </li>
+    }
+</ul>

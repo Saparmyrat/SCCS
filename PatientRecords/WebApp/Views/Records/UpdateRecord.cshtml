@@ -1,0 +1,42 @@
+﻿@model RecordViewModel
+
+@{
+    ViewData["Title"] = "Update record";
+}
+
+<h2>Update record</h2>
+<div class="show-content">
+    <div class="form-group">
+        <form asp-action="UpdateRecord" asp-controller="Records" asp-antiforgery="true">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <input type="hidden" name="PatientId" value="@Model.PatientId" />
+            <input type="hidden" name="DoctorId" value="@Model.DoctorId" />
+            <div>
+                <div class="validation" asp-validation-summary="ModelOnly" />
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="Cabinet"></label>
+                        <input class="form-control" type="number" asp-for="Cabinet" />
+                    </div>
+                    <span asp-validation-for="Cabinet" />
+                </div>
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="Date"></label>
+                        <input class="form-control" asp-for="Date" />
+                    </div>
+                    <span asp-validation-for="Date" />
+                </div>
+                <input type="submit" class="btn btn-success" value="Save" />
+            </div>
+        </form>
+        <form method="get" asp-action="ShowRecords" asp-controller="Records" asp-antiforgery="false">
+            <input type="submit" class="btn btn-secondary" value="Cancel" />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+

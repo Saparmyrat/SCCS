@@ -1,0 +1,40 @@
+﻿@model DiseasedViewModel
+
+@{
+    ViewData["Title"] = "Update diseased";
+}
+
+<h2>Update diseased</h2>
+<div class="show-content">
+    <div class="form-group">
+        <form asp-action="UpdateDiseased" asp-controller="Diseaseds" asp-antiforgery="true">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <input type="hidden" name="PatientId" value="@Model.PatientId" />
+            <div>
+                <div class="validation" asp-validation-summary="ModelOnly" />
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="Disease"></label>
+                        <input class="form-control" type="text" asp-for="Disease" />
+                    </div>
+                    <span asp-validation-for="Disease" />
+                </div>
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="DateOfIllnes"></label>
+                        <input class="form-control" asp-for="DateOfIllnes" />
+                    </div>
+                    <span asp-validation-for="DateOfIllnes" />
+                </div>
+                <input type="submit" class="btn btn-success" value="Save" />
+            </div>
+        </form>
+        <form method="get" asp-action="ShowDiseaseds" asp-controller="Diseaseds" asp-antiforgery="false">
+            <input type="submit" class="btn btn-secondary" value="Cancel" />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

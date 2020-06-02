@@ -1,0 +1,39 @@
+﻿@model DiseasedViewModel
+
+@{
+    ViewData["Title"] = "Create diseased";
+}
+
+<h2>Create diseased</h2>
+<div class="show-content">
+    <div class="form-group">
+        <form asp-action="CreateDiseased" asp-controller="Diseaseds" asp-antiforgery="true">
+            <div>
+                <div class="validation" asp-validation-summary="ModelOnly" />
+                @await Component.InvokeAsync("GetPatients")
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="Disease"></label>
+                        <input class="form-control" type="text" asp-for="Disease" />
+                    </div>
+                    <span asp-validation-for="Disease" />
+                </div>
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="DateOfIllnes"></label>
+                        <input class="form-control" asp-for="DateOfIllnes" />
+                    </div>
+                    <span asp-validation-for="DateOfIllnes" />
+                </div>
+                <input type="submit" class="btn btn-success" value="Create" />
+            </div>
+        </form>
+        <form method="get" asp-action="ShowDiseaseds" asp-controller="Diseaseds" asp-antiforgery="false">
+            <input type="submit" class="btn btn-secondary" value="Cancel" />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
