@@ -6,10 +6,12 @@ namespace BusinessLayer.Entities
     {
         public int Id { get; set; }
 
+        public int DoctorId { get; set; }
+
         public int PatientId { get; set; }
 
-        public string Disease { get; set; }
+        public int Cabinet { get; set; }
 
-        public DateTimeOffset DateOfDisease { get; set; }
+        public DateTimeOffset Date { get; set; }
     }
 }

@@ -1,0 +1,53 @@
+﻿@model DoctorViewModel
+
+@{
+    ViewData["Title"] = "Create doctor";
+}
+
+<h2>Create doctor</h2>
+<div class="show-content">
+    <div class="form-group">
+        <form asp-action="CreateDoctor" asp-controller="Doctors" asp-antiforgery="true">
+            <div>
+                <div class="validation" asp-validation-summary="ModelOnly" />
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="FirstName"></label>
+                        <input class="form-control" type="text" asp-for="FirstName" />
+                    </div>
+                    <span asp-validation-for="FirstName" />
+                </div>
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="Surname"></label>
+                        <input class="form-control" type="text" asp-for="Surname" />
+                    </div>
+                    <span asp-validation-for="Surname" />
+                </div>
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="Patronic"></label>
+                        <input class="form-control" type="text" asp-for="Patronic" />
+                    </div>
+                    <span asp-validation-for="Patronic" />
+                </div>
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="Specialty"></label>
+                        <input class="form-control" type="text" asp-for="Specialty" />
+                    </div>
+                    <span asp-validation-for="Specialty" />
+                </div>
+                <input type="submit" class="btn btn-success" value="Create" />
+            </div>
+        </form>
+        <form method="get" asp-action="ShowDoctors" asp-controller="Doctors" asp-antiforgery="false">
+            <input type="submit" class="btn btn-secondary" value="Cancel" />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+
