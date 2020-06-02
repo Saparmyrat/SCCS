@@ -1,0 +1,54 @@
+﻿@model PatientViewModel
+
+@{
+    ViewData["Title"] = "Update patient";
+}
+
+<h2>Update patient</h2>
+<div class="show-content">
+    <div class="form-group">
+        <form asp-action="UpdatePatient" asp-controller="Patients" asp-antiforgery="true">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <div>
+                <div class="validation" asp-validation-summary="ModelOnly" />
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="FirstName"></label>
+                        <input class="form-control" type="text" asp-for="FirstName" />
+                    </div>
+                    <span asp-validation-for="FirstName" />
+                </div>
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="Surname"></label>
+                        <input class="form-control" type="text" asp-for="Surname" />
+                    </div>
+                    <span asp-validation-for="Surname" />
+                </div>
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="Patronic"></label>
+                        <input class="form-control" type="text" asp-for="Patronic" />
+                    </div>
+                    <span asp-validation-for="Patronic" />
+                </div>
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="Address"></label>
+                        <input class="form-control" type="text" asp-for="Address" />
+                    </div>
+                    <span asp-validation-for="Address" />
+                </div>
+                <input type="submit" class="btn btn-success" value="Save" />
+            </div>
+        </form>
+        <form method="get" asp-action="ShowPatients" asp-controller="Patients" asp-antiforgery="false">
+            <input type="submit" class="btn btn-secondary" value="Cancel" />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+

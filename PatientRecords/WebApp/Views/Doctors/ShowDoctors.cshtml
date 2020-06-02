@@ -1,0 +1,63 @@
+﻿@model List<DoctorViewModel>
+
+@{
+    ViewData["Title"] = "Doctors";
+}
+
+<div>
+    <h2>Doctors</h2>
+    <form method="get" asp-action="CreateDoctor" asp-controller="Doctors" asp-antiforgery="false">
+        <input type="submit" class="btn btn-success" value="Create" />
+    </form>
+</div>
+<ul>
+    @foreach (var item in Model)
+    {
+    <li class="show-content">
+        <div class="flex-row__space-between">
+            <div class="alert alert-success" role="alert">
+                First name
+            </div>
+            <div class="alert alert-primary" role="alert">
+                @item.FirstName
+            </div>
+        </div>
+        <div class="flex-row__space-between">
+            <div class="alert alert-success" role="alert">
+                Surname
+            </div>
+            <div class="alert alert-primary" role="alert">
+                @item.Surname
+            </div>
+        </div>
+        <div class="flex-row__space-between">
+            <div class="alert alert-success" role="alert">
+                Patronic
+            </div>
+            <div class="alert alert-primary" role="alert">
+                @item.Patronic
+            </div>
+        </div>
+        <div class="flex-row__space-between">
+            <div class="alert alert-success" role="alert">
+                Specialty
+            </div>
+            <div class="alert alert-primary" role="alert">
+                @item.Specialty
+            </div>
+        </div>
+        <div>
+            <form method="get" asp-action="UpdateDoctor" asp-controller="Doctors" asp-antiforgery="false">
+                <input type="hidden" name="Id" value="@item.Id" />
+                <input type="submit" class="btn btn-success" value="Edit" />
+            </form>
+            <form method="get" asp-action="DeleteDoctor" asp-controller="Doctors" asp-antiforgery="false">
+                <input type="hidden" name="Id" value="@item.Id" />
+                <input type="submit" class="btn btn-warning" value="Delete" />
+            </form>
+        </div>
+    </li>
+    }
+</ul>
+
+

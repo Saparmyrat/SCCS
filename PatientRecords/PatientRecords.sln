@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAcce
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{8BABAEB3-0F25-4059-B32C-2CF2C1021987}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatientRecords", "PatientRecords\PatientRecords.csproj", "{F7EBBC91-B193-4641-B5B6-10FD86904055}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PatientRecords", "PatientRecords\PatientRecords.csproj", "{F7EBBC91-B193-4641-B5B6-10FD86904055}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{C8E7E7DF-D2F5-4481-9139-F5AC856F0E50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{F7EBBC91-B193-4641-B5B6-10FD86904055}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7EBBC91-B193-4641-B5B6-10FD86904055}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7EBBC91-B193-4641-B5B6-10FD86904055}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8E7E7DF-D2F5-4481-9139-F5AC856F0E50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8E7E7DF-D2F5-4481-9139-F5AC856F0E50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8E7E7DF-D2F5-4481-9139-F5AC856F0E50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8E7E7DF-D2F5-4481-9139-F5AC856F0E50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
